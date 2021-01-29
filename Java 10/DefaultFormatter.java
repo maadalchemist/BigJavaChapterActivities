@@ -10,8 +10,11 @@
 // An AccountingFormatter formats negative numbers with parentheses; for example, –1 as (1).
 // A BaseFormatter formats the number in base n, where n is any number between 2 and 36 that is provided in the constructor.
 
-public class DefaultFormatter {
-    String format(int n) {
+public class DefaultFormatter implements NumberFormatter {
+
+    public DefaultFormatter() {}
+
+    public String format(int n) {
         return Integer.toString(n);
     }
 }

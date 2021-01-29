@@ -10,12 +10,20 @@
 // An AccountingFormatter formats negative numbers with parentheses; for example, –1 as (1).
 // A BaseFormatter formats the number in base n, where n is any number between 2 and 36 that is provided in the constructor.
 
-public class DecimalSeparatorFormatter {
-    String format(int n) {
+public class DecimalSeparatorFormatter implements NumberFormatter {
+
+    public DecimalSeparatorFormatter() {}
+
+    public String format(int n) {
         String s = Integer.toString(n);
-        int inj = 3;
-        for (int i = 0; i < s.length() / 3; i++) {
-            s.substring(0,inj) + "," + s.sunstring(inj,s.length());
+        String s2 = "";
+        int i = 3;
+
+        while (i < s.length() - 3){
+            s2 = "," + s.substring(s.length() - i, s.length() - i + 3) + s2;
+            i += 3;
         }
+        s2 = s.substring(0, s.length() - i + 3) + s2;
+        return s2;
     }
 }

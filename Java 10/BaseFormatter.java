@@ -10,9 +10,20 @@
 // An AccountingFormatter formats negative numbers with parentheses; for example, –1 as (1).
 // A BaseFormatter formats the number in base n, where n is any number between 2 and 36 that is provided in the constructor.
 
-public class BaseFormatter {
-    String format(int n) {
-        return Integer.toString(n);
+public class BaseFormatter implements NumberFormatter {
+
+private int nx;
+
+    public BaseFormatter(int n) {
+        if (n >= 2 && n <= 36) {
+            this.nx = n;
+        } else {
+            this.nx = 2;
+        }
+    }
+
+    public String format(int n) {
+        return Integer.toString( Integer.parseInt(Integer.toString(n), 10), nx);
     }
 }
 
