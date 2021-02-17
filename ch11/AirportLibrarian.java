@@ -8,21 +8,33 @@ public class AirportLibrarian {
     public static void main(String[] args) throws FileNotFoundException {
         Scanner cin = new Scanner(System.in);
         Scanner airportsDat = new Scanner(new File("airports.dat"));
-        airportsDat.useDelimiter("");
+        airportsDat.useDelimiter(",");
         String in = "";
         String city = "";
         String name = "";
-        char c = '';
+        String temp = "";
+        char c = ' ';
 
         System.out.println("Enter a city:");
         in = cin.next();
 
-        int cycle = 1;
+        int position = 0;
         while(airportsDat.hasNext()) {
-            c = airportsDat.next();
-            
+            temp = airportsDat.next();
+            if (position == 0 && !temp.contains("OurAirports")) {
+                System.out.println(temp);
+                // city = temp;
+                // System.out.println(city);
+            }
+            // else if (position == 2) {
+            //     name = temp;
+            //     System.out.println(name);
+            //     // if (city.equalsIgnoreCase(in)) {   System.out.println(name);   }
+            // }
+            position ++;
+            position = position % 13;
         }
     }
 }
 
-// 7868     "Camp Bastion Airport"     "Camp Bastion"     "Afghanistan"     "OAZ"     "OAZI"     31.863800048799998     64.2246017456     2943     4.5     "N"     "Asia/Kabul"     "airport"     "OurAirports"
+// [###],[NAME],[CITY],[COUNTRY],[IATA],[ICAO],[LATITUDE],[LONGITUDE],[ALTITUDE],[TIMEZONE],[DST],[Tz database time zone],[TYPE],[SOURCE]
