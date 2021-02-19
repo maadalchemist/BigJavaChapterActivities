@@ -17,22 +17,22 @@ public class AirportLibrarian {
 
         System.out.println("Enter a city:");
         in = cin.next();
+        System.out.println("These airports are in that city:");
 
         int position = 0;
         while(airportsDat.hasNext()) {
             temp = airportsDat.next();
-            if (position == 0 && !temp.contains("OurAirports")) {
-                System.out.println(temp);
-                // city = temp;
+            if(temp.contains("\"")) {   temp = temp.substring(1,temp.length() - 1);   }
+            if (position == 1) {
+                name = temp;
+                // System.out.print(name + ": ");
+            } else if (position == 2) {
+                city = temp;
                 // System.out.println(city);
+                if (city.equalsIgnoreCase(in)) {   System.out.println(name);   }
             }
-            // else if (position == 2) {
-            //     name = temp;
-            //     System.out.println(name);
-            //     // if (city.equalsIgnoreCase(in)) {   System.out.println(name);   }
-            // }
             position ++;
-            position = position % 13;
+            position = position % 14;
         }
     }
 }
