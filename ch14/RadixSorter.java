@@ -1,67 +1,69 @@
+import java.io.*;
 import java.util.*;
 
 public class RadixSorter {
-    private ArrayList<int> zero, one, two, three, four, five, six, seven, eight, nine;
 
-    public RadixSorter() {
-        zero = new ArrayList<int>();
-        one = new ArrayList<int>();
-        two = new ArrayList<int>();
-        three = new ArrayList<int>();
-        four = new ArrayList<int>();
-        five = new ArrayList<int>();
-        six = new ArrayList<int>();
-        seven = new ArrayList<int>();
-        eight = new ArrayList<int>();
-        nine = new ArrayList<int>();
-    }
+    // A function to do counting sort of arr[] according to
+    // the digit represented by exp.
+    static void countSort(int arr[], int n, int exp) {
+        int output[] = new int[n]; // output array
+        int i;
+        int count[] = new int[10];
+        Arrays.fill(count, 0);
 
-    public ArrayList<int> radix_sort(ArrayList<int> unsorted) {
-        int digit = 1;
-        int max_digit = 0;
-        for(int num : unsorted) {
-            switch (num % 10) {
-                case 0:
-                    zero.add(num);
-                    break;
-                case 1:
-                    one.add(num);
-                    break;
-                case 2:
-                    two.add(num);
-                    break;
-                case 3:
-                    three.add(num);
-                    break;
-                case 4:
-                    four.add(num);
-                    break;
-                case 5:
-                    five.add(num);
-                    break;
-                case 6:
-                    six.add(num);
-                    break;
-                case 7:
-                    seven.add(num);
-                    break;
-                case 8:
-                    eight.add(num);
-                    break;
-                case 9:
-                    nine.add(num);
-                    break;
-            }
+        // Store count of occurrences in count[]
+        for (i = 0; i < n; i++) {
+            count[(arr[i] / exp) % 10]++;
+        }
 
-            int temp = 0;
-            while
+        // Change count[i] so that count[i] now contains
+        // actual position of this digit in output[]
+        for (i = 1; i < 10; i++) {
+            count[i] += count[i - 1];
+        }
+
+        // Build the output array
+        for (i = n - 1; i >= 0; i--) {
+            output[count[(arr[i] / exp) % 10] - 1] = arr[i];
+            count[(arr[i] / exp) % 10]--;
+        }
+
+        // Copy the output array to arr[], so that arr[] now
+        // contains sorted numbers according to current digit
+        for (i = 0; i < n; i++) {
+            arr[i] = output[i];
         }
     }
+
+    // The main function to that sorts arr[] of size n using
+    // Radix Sort
+    static void radixsort(int arr[], int n)
+    {
+        // Find the maximum number to know number of digits
+        int max = arr[0];
+        for (int i = 1; i < n; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+
+        // Do counting sort for every digit
+        for (int exp = 1; max / exp > 0; exp *= 10) {
+            countSort(arr, n, exp);
+        }
+    }
+
+    // A utility function to print an array
+    static void print(int arr[], int n) {
+        for (int i = 0; i < n; i++) {
+            System.out.print(arr[i] + " ");
+        }
+    }
+
+    // ENTRY POINT
+    public static void main(String[] args) {
+        int arr[] = { 170, 45, 75, 90, 802, 24, 2, 66 };
+        radixsort(arr, arr.length);
+        print(arr, arr.length);
+    }
 }
-/**
-* The radix sort algorithm sorts an array of n integers with d digits, using ten auxiliary arrays.
-* First place each value v into the auxiliary array whose index corresponds to the last digit of v.
-* Then move all values back into the original array, preserving their order.
-* Repeat the process, now using the next-to-last (tens) digit, then the hundreds digit, and so on.
-* What is the big-Oh time of this algorithm in terms of n and d? When is this algorithm preferable to merge sort?
-*/
